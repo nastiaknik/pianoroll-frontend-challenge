@@ -1,0 +1,97 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Mulish", sans-serif;
+  cursor: default;
+  background-color: #f0f0f0;
+  color: #1c1c1a;
+  height: 100vh;
+  text-align: center;
+  overflow: auto;
+  position: relative;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #154151;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.logo-container img {
+  height: 40px;
+  width: auto;
+  fill: white;
+}
+
+#pianoRollContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+  padding: 10px;
+  max-width: 1420px;
+  margin: 0 auto;
+
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+h1 {
+  margin: 20px 0;
+  font-size: 42px;
+}
+
+button {
+  padding: 15px 25px;
+  font-size: 18px;
+  color: #f0f0f0;
+  background-color: #944038;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+  border-bottom: 3px solid #381815;
+  position: relative;
+  margin-bottom: 10px;
+}
+button:hover {
+  background-color: #a74d4d;
+}
+button:active {
+  background-color: #752c2c;
+}
+
+#buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.piano-roll-svg {
+  border: 2px solid #381815;
+}
+
+.piano-roll-card {
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.description {
+  margin-top: 10px;
+}
