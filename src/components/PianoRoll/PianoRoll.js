@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
+import { PianoRollSvg } from "./PianoRoll.styled";
 
-const PianoRoll = ({ sequence }) => {
+const PianoRoll = ({ sequence, page = "home" }) => {
   const svgRef = useRef(null);
 
   function generateGradientTable(startColor, endColor, steps) {
@@ -143,11 +144,10 @@ const PianoRoll = ({ sequence }) => {
   }, [sequence]);
 
   return (
-    <svg
+    <PianoRollSvg
       ref={svgRef}
-      className="piano-roll-svg"
-      width="80%"
-      height="150"
+      width={page === "home" ? "80%" : "90%"}
+      height={page === "home" ? "150" : "425"}
       viewBox="0 0 1 1"
       preserveAspectRatio="none"
     />

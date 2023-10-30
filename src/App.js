@@ -1,10 +1,20 @@
 import { useState } from "react";
-import PianoRollContainer from "./components/PianoRollContainer";
-import "./App.css";
+import MainView from "./pages/MainView/MainView";
+import MainPage from "./pages/MainPage/MainPage";
 import logo from "./asserts/white.svg";
+import { Main, NavBar, Logo, Header } from "./App.styled";
 
 const App = () => {
   const [data, setData] = useState(null);
+  const [selectedRollData, setSelectedRollData] = useState(null);
+
+  const handleCardClick = (rollData) => {
+    setSelectedRollData(rollData);
+  };
+
+  const handleBackButtonClick = () => {
+    setSelectedRollData(null);
+  };
 
   async function loadPianoRollData() {
     try {
@@ -20,23 +30,28 @@ const App = () => {
   }
 
   return (
-    <>
-      <nav className="navbar">
-        <div className="logo-container">
-          <img src={logo} alt="Logo" />
-        </div>
-      </nav>
+    <Main>
+      <Header>
+        <NavBar>
+          <Logo src={logo} alt="PianoRoll logo" />
+        </NavBar>
+      </Header>
 
-      <h1>Welcome to PianoRoll frontend coding challenge!</h1>
-
-      <div id="buttonContainer">
-        <button id="loadCSV" onClick={loadPianoRollData}>
-          Load Piano Rolls!
-        </button>
-      </div>
-
-      {data && <PianoRollContainer data={data} />}
-    </>
+      {selectedRollData ? (
+        <MainView
+          data={data}
+          selectedRollData={selectedRollData}
+          onCardClick={handleCardClick}
+          onBackButtonClick={handleBackButtonClick}
+        />
+      ) : (
+        <MainPage
+          data={data}
+          onCardClick={handleCardClick}
+          loadPianoRollData={loadPianoRollData}
+        />
+      )}
+    </Main>
   );
 };
 
