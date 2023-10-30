@@ -1,5 +1,6 @@
 {
   "name": "pianoroll-frontend-challenge",
+  "homepage": "https://nastiaknik.github.io/pianoroll-frontend-challenge/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
