@@ -1,10 +1,15 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { PianoRollSvg } from "./PianoRoll.styled";
 
 const PianoRoll = ({ sequence, page = "home" }) => {
   const svgRef = useRef(null);
+  const [selection, setSelection] = useState({
+    isSelecting: false,
+    startX: 0,
+    endX: 0,
+  });
 
-  function generateGradientTable(startColor, endColor, steps) {
+  const generateGradientTable = (startColor, endColor, steps) => {
     const gradientTable = [];
     for (let i = 0; i < steps; i += 1) {
       const r = startColor.r + ((endColor.r - startColor.r) * i) / (steps - 1);
@@ -15,13 +20,15 @@ const PianoRoll = ({ sequence, page = "home" }) => {
       );
     }
     return gradientTable;
-  }
+  };
 
   useEffect(() => {
     if (!sequence) {
       return;
     }
+
     const svgElement = svgRef.current;
+    const svgRect = svgElement.getBoundingClientRect();
 
     const backgroundStartColor = { r: 93, g: 181, b: 213 };
     const backgroundEndColor = { r: 21, g: 65, b: 81 };
@@ -74,7 +81,7 @@ const PianoRoll = ({ sequence, page = "home" }) => {
           svgElement.appendChild(rect);
         }
 
-        var line = document.createElementNS(
+        const line = document.createElementNS(
           "http://www.w3.org/2000/svg",
           "line"
         );
@@ -139,9 +146,74 @@ const PianoRoll = ({ sequence, page = "home" }) => {
         svgElement.appendChild(noteRectangle);
       });
     };
-
     drawPianoRoll(sequence);
-  }, [sequence]);
+
+    const handleMouseDown = (e) => {
+      if (e.target === svgElement) {
+        const startX = (e.clientX - svgRect.left) / svgRect.width;
+        setSelection({ isSelecting: true, startX, endX: startX });
+      }
+    };
+
+    const handleMouseMove = (e) => {
+      if (selection.isSelecting) {
+        const endX = (e.clientX - svgRect.left) / svgRect.width;
+        setSelection({ ...selection, endX });
+      }
+    };
+
+    const handleMouseUp = () => {
+      if (selection.isSelecting) {
+        const startX = Math.min(selection.startX, selection.endX);
+        const endX = Math.max(selection.startX, selection.endX);
+
+        const startSelectedTime = startX * end + start;
+        const endSelectedTime = endX * end + start;
+
+        const selectedNotes = sequence.filter(
+          (note) =>
+            note.start <= endSelectedTime && note.end >= startSelectedTime
+        );
+
+        setSelection({ isSelecting: false, startX: 0, endX: 0 });
+        console.log("Selected Range:", startSelectedTime, endSelectedTime);
+        console.log("Selected Notes:", selectedNotes);
+      }
+    };
+
+    const drawSelection = (selection) => {
+      if (selection.isSelecting) {
+        const { startX, endX } = selection;
+        const x = Math.min(startX, endX);
+        const width = Math.abs(endX - startX);
+
+        const selectionRect = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "rect"
+        );
+        selectionRect.setAttribute("x", `${x}`);
+        selectionRect.setAttribute("y", "0");
+        selectionRect.setAttribute("width", `${width}`);
+        selectionRect.setAttribute("height", "1");
+        selectionRect.setAttribute("fill", "rgba(0, 0, 255, 0.3)");
+
+        svgElement.appendChild(selectionRect);
+      }
+    };
+    drawSelection(selection);
+
+    window.addEventListener("mouseup", handleMouseUp);
+    svgElement.addEventListener("mousedown", handleMouseDown);
+    svgElement.addEventListener("mousemove", handleMouseMove);
+    svgElement.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      window.removeEventListener("mouseup", handleMouseUp);
+      svgElement.removeEventListener("mousedown", handleMouseDown);
+      svgElement.removeEventListener("mousemove", handleMouseMove);
+      svgElement.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [sequence, selection]);
 
   return (
     <PianoRollSvg
