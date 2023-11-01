@@ -8,6 +8,7 @@ const PianoRoll = ({ sequence, page = "home" }) => {
     startX: 0,
     endX: 0,
   });
+  const [selectedRange, setSelectedRange] = useState(null);
 
   const generateGradientTable = (startColor, endColor, steps) => {
     const gradientTable = [];
@@ -176,6 +177,7 @@ const PianoRoll = ({ sequence, page = "home" }) => {
         );
 
         setSelection({ isSelecting: false, startX: 0, endX: 0 });
+        setSelectedRange({ startX, endX });
         console.log("Selected Range:", startSelectedTime, endSelectedTime);
         console.log("Selected Notes:", selectedNotes);
       }
@@ -214,6 +216,26 @@ const PianoRoll = ({ sequence, page = "home" }) => {
       svgElement.removeEventListener("mouseup", handleMouseUp);
     };
   }, [sequence, selection]);
+
+  useEffect(() => {
+    if (selectedRange) {
+      const { startX, endX } = selectedRange;
+      const x = Math.min(startX, endX);
+      const width = Math.abs(endX - startX);
+
+      const selectionRect = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "rect"
+      );
+      selectionRect.setAttribute("x", `${x}`);
+      selectionRect.setAttribute("y", "0");
+      selectionRect.setAttribute("width", `${width}`);
+      selectionRect.setAttribute("height", "1");
+      selectionRect.setAttribute("fill", "rgba(0, 0, 255, 0.3");
+
+      svgRef.current.appendChild(selectionRect);
+    }
+  }, [selectedRange]);
 
   return (
     <PianoRollSvg
