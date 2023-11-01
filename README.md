@@ -41,7 +41,7 @@ This will start the application and you can view it in your browser at http://lo
 - Load and view piano rolls by clicking the "Load Piano Rolls!" button
 - Click on a Piano Roll to view it in detail.
 
-![Main Page](./assets/main-page.png)
+![Main Page](./src/assets/main-page.png)
 
 ### Main View page
 
@@ -50,8 +50,8 @@ This will start the application and you can view it in your browser at http://lo
 - The selected range is visually highlighted, and a number of selected notes are displayed in a notification. Additionally, the selection data, including start and end points, is logged in the console.
 - To clear the selection, click anywhere on the Piano Roll.
 
-![Main View](./assets/main-view.png)
-![Interactive Selection Tool](./assets/selection.png)
+![Main View](./src/assets/main-view.png)
+![Interactive Selection Tool](./src/assets/selection.png)
 
 ## Features
 
