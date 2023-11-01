@@ -2,16 +2,82 @@
 
 ## Introduction
 
-You will be building on top of a demo code that generates a widget for browsing Piano Rolls - the core element of [Piano Roll](https://pianoroll.io).
-The goal is to enhance the user interface and add an interactive component.
+This project is a frontend application for browsing and interacting with Piano Rolls, a core element of [Piano Roll](https://pianoroll.io).
+App is deployed on gh-pages.
+[Live version of the app](https://nastiaknik.github.io/pianoroll-frontend-challenge/) is avaliable by the web-address.
+
+To run this project locally, follow these steps:
+
+1.  Clone the repository to your local machine:
+
+```bash
+  git clone  https://github.com/nastiaknik/pianoroll-frontend-chalenge.git
+```
+
+2.  Navigate to the project directory:
+
+```bash
+  cd pianoroll-frontend-challenge
+```
+
+3.  Install dependencies:
+
+```bash
+  npm install
+```
+
+4.  Start the development server:
+
+```bash
+  npm start
+```
+
+This will start the application and you can view it in your browser at http://localhost:3000/pianoroll-frontend-challenge.
+
+## Content
+
+### Main page
+
+- Load and view piano rolls by clicking the "Load Piano Rolls!" button
+- Click on a Piano Roll to view it in detail.
+
+![Main Page](./assets/main-page.png)
+
+### Main View page
+
+- The selected Piano Roll will be displayed enlarged on the main view.
+- Use the selection tool to click and drag to select a range on the Piano Roll.
+- The selected range is visually highlighted, and a number of selected notes are displayed in a notification. Additionally, the selection data, including start and end points, is logged in the console.
+- To clear the selection, click anywhere on the Piano Roll.
+
+![Main View](./assets/main-view.png)
+![Interactive Selection Tool](./assets/selection.png)
+
+## Features
+
+- Responsive grid layout for displaying Piano Rolls.
+- Clickable Piano Rolls with enlarged view on selection.
+- Vertical list display for additional Piano Rolls.
+- Interactive selection tool for selecting a range on the Piano Roll.
+- Real-time visual feedback during selection.
+- Console logging of selection data.
+- Consistent styling for different screen resolutions.
+
+## Technologies Used
+
+- HTML
+- React
+- JavaScript
+- Styled Components
+- React Icons
+- Fetch API
+- React Toastify
+
+## Task description
 
 This is what the starting point looks like:
 
 <img width="666" alt="image" src="https://github.com/Nospoko/pianoroll-frontend-challenge/assets/8056825/daf35d32-f4e5-4a00-bbe8-78ecec2f2011">
-
-## Task description
-
-### Before you start
 
 We recommend you start by understanding how the piano roll is structured and displayed, and what is the underlying data structure. If at any point you have any questions, you can join our [discord channel](https://discord.gg/2RadyyxADa) where we'll be providing active support.
 
@@ -103,5 +169,6 @@ Your task is to implement a tool or an overlay on the piano roll that allows use
 2. **User Experience**: The tool should provide a good user experience, with intuitive controls and clear visual feedback.
 3. **Code Quality**: The code should be clean, easy to read, well-organized, and properly documented.
 
+## Contributing
 
-
+Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or create a pull request.

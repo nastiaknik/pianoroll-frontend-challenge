@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import MainView from "./pages/MainView/MainView";
 import MainPage from "./pages/MainPage/MainPage";
-import logo from "./asserts/white.svg";
+import logo from "./assets/white.svg";
 import { Main, NavBar, Logo, Header } from "./App.styled";
 
 const App = () => {
@@ -11,7 +13,6 @@ const App = () => {
   const handleCardClick = (rollData) => {
     setSelectedRollData(rollData);
   };
-
   const handleBackButtonClick = () => {
     setSelectedRollData(null);
   };
@@ -20,11 +21,13 @@ const App = () => {
     try {
       const response = await fetch("https://pianoroll.ai/random_notes");
       if (!response.ok) {
+        toast.error(`HTTP error! Status: ${response.status}`);
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
       setData(data);
     } catch (error) {
+      toast.error("Error loading data:", error);
       console.error("Error loading data:", error);
     }
   }
@@ -33,10 +36,11 @@ const App = () => {
     <Main>
       <Header>
         <NavBar>
-          <Logo src={logo} alt="PianoRoll logo" />
+          <a href="/">
+            <Logo src={logo} alt="PianoRoll logo" />
+          </a>
         </NavBar>
       </Header>
-
       {selectedRollData ? (
         <MainView
           data={data}
@@ -51,6 +55,7 @@ const App = () => {
           loadPianoRollData={loadPianoRollData}
         />
       )}
+      <ToastContainer />
     </Main>
   );
 };

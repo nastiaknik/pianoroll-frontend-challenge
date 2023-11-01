@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { PianoRollSvg } from "./PianoRoll.styled";
 
 const PianoRoll = ({ sequence, page = "home" }) => {
@@ -27,26 +28,18 @@ const PianoRoll = ({ sequence, page = "home" }) => {
     if (!sequence) {
       return;
     }
-
     const svgElement = svgRef.current;
     const svgRect = svgElement.getBoundingClientRect();
-
-    const backgroundStartColor = { r: 93, g: 181, b: 213 };
-    const backgroundEndColor = { r: 21, g: 65, b: 81 };
     const backgroundColormap = generateGradientTable(
-      backgroundStartColor,
-      backgroundEndColor,
+      { r: 93, g: 181, b: 213 },
+      { r: 21, g: 65, b: 81 },
       128
     );
-
-    const noteStartColor = { r: 66, g: 66, b: 61 };
-    const noteEndColor = { r: 28, g: 28, b: 26 };
     const noteColormap = generateGradientTable(
-      noteStartColor,
-      noteEndColor,
+      { r: 66, g: 66, b: 61 },
+      { r: 28, g: 28, b: 26 },
       128
     );
-
     let start = sequence[0].start;
     let end = sequence[sequence.length - 1].end - start;
 
@@ -58,7 +51,6 @@ const PianoRoll = ({ sequence, page = "home" }) => {
       while (svgElement.firstChild) {
         svgElement.removeChild(svgElement.firstChild);
       }
-
       const pitchSpan = maxPitch - minPitch;
 
       for (let it = minPitch; it <= maxPitch; it += 1) {
@@ -178,9 +170,18 @@ const PianoRoll = ({ sequence, page = "home" }) => {
 
         setSelection({ isSelecting: false, startX: 0, endX: 0 });
         setSelectedRange({ startX, endX });
+        toast.success(
+          `You selected ${selectedNotes.length} ${
+            selectedNotes.length === 1 ? "note" : "notes"
+          }`
+        );
         console.log("Selected Range:", startSelectedTime, endSelectedTime);
         console.log("Selected Notes:", selectedNotes);
       }
+    };
+
+    const handleMouseClick = () => {
+      setSelectedRange(null);
     };
 
     const drawSelection = (selection) => {
@@ -204,12 +205,14 @@ const PianoRoll = ({ sequence, page = "home" }) => {
     };
     drawSelection(selection);
 
+    svgElement.addEventListener("click", handleMouseClick);
     window.addEventListener("mouseup", handleMouseUp);
     svgElement.addEventListener("mousedown", handleMouseDown);
     svgElement.addEventListener("mousemove", handleMouseMove);
     svgElement.addEventListener("mouseup", handleMouseUp);
 
     return () => {
+      svgElement.removeEventListener("click", handleMouseClick);
       window.removeEventListener("mouseup", handleMouseUp);
       svgElement.removeEventListener("mousedown", handleMouseDown);
       svgElement.removeEventListener("mousemove", handleMouseMove);
@@ -232,7 +235,6 @@ const PianoRoll = ({ sequence, page = "home" }) => {
       selectionRect.setAttribute("width", `${width}`);
       selectionRect.setAttribute("height", "1");
       selectionRect.setAttribute("fill", "rgba(0, 0, 255, 0.3");
-
       svgRef.current.appendChild(selectionRect);
     }
   }, [selectedRange]);

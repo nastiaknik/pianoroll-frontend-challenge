@@ -12,7 +12,7 @@ const PianoRollContainer = ({
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    const generateCards = async () => {
+    const generateCards = () => {
       if (!data || data.length === 0) {
         return null;
       }
