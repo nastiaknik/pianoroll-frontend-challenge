@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/pianoroll-frontend-challenge/static/css/main.ffe34ec7.css",
-    "main.js": "/pianoroll-frontend-challenge/static/js/main.fe646040.js",
+    "main.css": "/pianoroll-frontend-challenge/static/css/main.223758ec.css",
+    "main.js": "/pianoroll-frontend-challenge/static/js/main.16bd7425.js",
     "static/media/white.svg": "/pianoroll-frontend-challenge/static/media/white.9a92a1919f20007aaeaa6a81f3341f94.svg",
     "index.html": "/pianoroll-frontend-challenge/index.html",
-    "main.ffe34ec7.css.map": "/pianoroll-frontend-challenge/static/css/main.ffe34ec7.css.map",
-    "main.fe646040.js.map": "/pianoroll-frontend-challenge/static/js/main.fe646040.js.map"
+    "main.223758ec.css.map": "/pianoroll-frontend-challenge/static/css/main.223758ec.css.map",
+    "main.16bd7425.js.map": "/pianoroll-frontend-challenge/static/js/main.16bd7425.js.map"
   },
   "entrypoints": [
-    "static/css/main.ffe34ec7.css",
-    "static/js/main.fe646040.js"
+    "static/css/main.223758ec.css",
+    "static/js/main.16bd7425.js"
   ]
 }
